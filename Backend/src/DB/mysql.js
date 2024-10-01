@@ -43,7 +43,20 @@ function agregar(tabla, data) {
   });
 }
 
+function query(tabla, consulta) {
+  return new Promise((resolve, reject) => {
+    connection.query(
+      `SELECT * FROM ${tabla} WHERE ?`,
+      consulta,
+      (error, resultado) => {
+        return error ? reject(error) : resolve(resultado[0]);
+      }
+    );
+  });
+}
+
 module.exports = {
   todos,
   agregar,
+  query,
 };

@@ -1,4 +1,41 @@
+const db = require("../../DB/mysql");
+const bcrypt = require("bcrypt");
 const servicio = require("./servicios");
+const generateToken = require("../../Middleware/generateToken");
+
+const USUARIOS = "Usuarios";
+
+// Simulando una función de autenticación (como login)
+async function loginUser(req, res) {
+  const { email, password } = req.body;
+
+  // Busca al usuario en la base de datos
+  const user = await db.query(USUARIOS, { email });
+
+  // Comparacion de las contraseña nueva y la hasheada en DB
+  const descrypt = bcrypt.compareSync(password, user.password);
+  if (!user || !descrypt) {
+    return res.status(401).json({ message: "Credenciales incorrectas" });
+  }
+
+  // Crear un payload para el token (información que quieres incluir en el token)
+  const payload = {
+    id: user.id,
+    user: user.user,
+    email: user.email,
+    password: user.password,
+  };
+
+  // Tiempo de expiracion de Token
+  const expireIn = "1m";
+
+  // Firmar el token
+  const token = generateToken.generateToken(payload, expireIn);
+
+  // Devolver el token al cliente por header y body. Mejor por header
+  res.header("Authorization", token);
+  res.json({ token: token });
+}
 
 async function agregar(req, res, next) {
   try {
@@ -32,4 +69,5 @@ async function agregar(req, res, next) {
 
 module.exports = {
   agregar,
+  loginUser,
 };
