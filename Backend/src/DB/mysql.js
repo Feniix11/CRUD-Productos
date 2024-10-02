@@ -31,11 +31,19 @@ function todos(tabla) {
   });
 }
 
-function agregar(tabla, data) {
+function create(tabla, data) {
+  return new Promise((resolve, reject) => {
+    connection.query(`INSERT INTO ${tabla} SET ?`, data, (error, resultado) => {
+      return error ? reject(error) : resolve(resultado);
+    });
+  });
+}
+
+function eliminar(tabla, data) {
   return new Promise((resolve, reject) => {
     connection.query(
-      `INSERT INTO ${tabla} SET ?`,
-      [data, data],
+      `DELETE FROM ${tabla} WHERE id = ?`,
+      data.id,
       (error, resultado) => {
         return error ? reject(error) : resolve(resultado);
       }
@@ -58,6 +66,7 @@ function query(tabla, consulta) {
 
 module.exports = {
   todos,
-  agregar,
+  create,
+  eliminar,
   query,
 };

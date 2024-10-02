@@ -1,6 +1,5 @@
 const db = require("../../DB/mysql");
 const bcrypt = require("bcrypt");
-const servicio = require("./servicios");
 const generateToken = require("../../Middleware/generateToken");
 
 const USUARIOS = "Usuarios";
@@ -14,6 +13,8 @@ async function loginUser(req, res) {
 
   // Comparacion de las contraseña nueva y la hasheada en DB
   const descrypt = bcrypt.compareSync(password, user.password);
+
+  // Validacion de datos de usuario para confirmar que son correctos
   if (!user || !descrypt) {
     return res.status(401).json({ message: "Credenciales incorrectas" });
   }
@@ -27,47 +28,44 @@ async function loginUser(req, res) {
   };
 
   // Tiempo de expiracion de Token
-  const expireIn = "1m";
+  const expiresIn = "5m";
 
   // Firmar el token
-  const token = generateToken.generateToken(payload, expireIn);
+  const token = generateToken.generateToken(payload, expiresIn);
 
   // Devolver el token al cliente por header y body.
   res.header("Authorization", token);
   res.json({ token: token });
 }
 
-async function agregar(req, res, next) {
+async function create(req, res) {
   try {
-    const items = await servicio.agregar(req.body);
-    if (!req.body.id) {
-      mensaje = "Usuario Guardado con exito";
-    } else {
-      mensaje = "Usuario Actualizado con exito";
-    }
-    res.send({
-      error: false,
-      body: mensaje,
+    // Declaro variable con el body
+    const newUser = req.body;
+
+    // Hasheo la nueva password
+    const hash = await bcrypt.hash(newUser.password, 10);
+
+    // Guardo en mi base de datos con password Hasheada
+    await db.create(USUARIOS, { ...newUser, password: hash });
+
+    res.status(201).json({
+      message: "El usuario se agrego correctamente",
     });
   } catch (error) {
     if (error.code === "ER_DUP_ENTRY") {
-      // Puedes ajustar este código según tu configuración de error
-      res.status(409).send({
-        // 409 Conflict
-        error: true,
-        message: "El usuario ya existe. Por favor, utiliza otro ID o correo.",
+      res.status(400).json({
+        message: "El email ya existe en el sistema",
       });
     } else {
-      // Manejar otros tipos de errores
-      res.status(500).send({
-        error: true,
-        message: "Ocurrió un error al procesar la solicitud.",
+      res.status(500).json({
+        message: "ERROR!, No se pudo agregar el usuario",
       });
     }
   }
 }
 
 module.exports = {
-  agregar,
+  create,
   loginUser,
 };

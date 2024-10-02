@@ -4,5 +4,6 @@ const { Authenticator } = require("../../Middleware/authenticator");
 const router = express.Router();
 
 router.get("/", Authenticator, controlador.todos);
+router.post("/create");
 
 module.exports = router;
