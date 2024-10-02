@@ -32,7 +32,7 @@ async function loginUser(req, res) {
   // Firmar el token
   const token = generateToken.generateToken(payload, expireIn);
 
-  // Devolver el token al cliente por header y body. Mejor por header
+  // Devolver el token al cliente por header y body.
   res.header("Authorization", token);
   res.json({ token: token });
 }

@@ -48,6 +48,7 @@ function query(tabla, consulta) {
     connection.query(
       `SELECT * FROM ${tabla} WHERE ?`,
       consulta,
+
       (error, resultado) => {
         return error ? reject(error) : resolve(resultado[0]);
       }
