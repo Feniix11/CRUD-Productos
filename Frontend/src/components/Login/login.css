@@ -1,3 +1,5 @@
+/* src/components/Login.css */
+
 body {
   margin: 0;
   padding: 0;
@@ -16,9 +18,12 @@ body {
 .login-card {
   background-color: white;
   padding: 20px;
+  border: 2px solid red; /* Delineado rojo */
   border-radius: 10px; /* Bordes redondeados */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
   width: 300px; /* Ancho fijo para el card */
+  display: flex; /* Flexbox para alinear contenido */
+  flex-direction: column; /* Colocar elementos en columna */
 }
 
 .form-group {
@@ -35,6 +40,8 @@ input {
   padding: 10px; /* Espacio interno */
   border: 1px solid #ccc; /* Borde gris */
   border-radius: 5px; /* Bordes redondeados */
+  margin-right: 0; /* Evitar margen a la derecha */
+  box-sizing: border-box; /* Incluye padding y border en el ancho */
 }
 
 button {

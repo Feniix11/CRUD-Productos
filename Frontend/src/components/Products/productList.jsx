@@ -10,9 +10,12 @@ const ProductList = () => {
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const response = await fetchProducts(); // Asegúrate de que esta función esté configurada correctamente
-        setProducts(response); // Asegúrate de que el formato de respuesta sea correcto
+        console.log("Cargando productos..."); // Log para indicar que se está intentando cargar
+        const response = await fetchProducts();
+        console.log("Productos cargados:", response); // Log para verificar la respuesta
+        setProducts(response);
       } catch (err) {
+        console.error("Error al cargar productos:", err.message); // Log del error
         setError(err.message);
       } finally {
         setLoading(false);

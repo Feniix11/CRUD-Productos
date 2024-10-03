@@ -13,7 +13,7 @@ async function register(user, email, password) {
     });
 
     if (!response.ok) {
-      throw new Error("Error al crear la cuenta");
+      throw new Error("Error al crear la cuenta o ya existe");
     }
 
     const data = await response.json();

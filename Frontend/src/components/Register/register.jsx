@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import register from "../../service/register";
+import "./register.css";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -20,46 +21,51 @@ const Register = () => {
       // Registro del nuevo usuario
       await register(user, email, password);
       setSuccessMessage("Registro exitoso, ahora puedes iniciar sesión.");
+      setUser("");
+      setEmail("");
+      setPassword("");
     } catch (error) {
       setError(error.message);
     }
   };
 
   return (
-    <div>
-      <h2>Registro</h2>
-      <form onSubmit={handleRegister}>
-        <div>
-          <label>Usuario:</label>
-          <input
-            type="user"
-            value={user}
-            onChange={(e) => setUser(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Contraseña:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Registrar</button>
-      </form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
+    <div className="login-container">
+      <div className="login-card">
+        <h2>Registro</h2>
+        <form onSubmit={handleRegister}>
+          <div className="form-group">
+            <label>Usuario:</label>
+            <input
+              type="user"
+              value={user}
+              onChange={(e) => setUser(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Email:</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Contraseña:</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit">Registrar</button>
+        </form>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
+      </div>
     </div>
   );
 };

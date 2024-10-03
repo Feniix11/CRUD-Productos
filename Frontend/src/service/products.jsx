@@ -1,8 +1,13 @@
+const API_URL = "http://localhost:3001";
+
 export const fetchProducts = async () => {
+  const token = localStorage.getItem("token");
   try {
-    const response = await fetch("http://localhost:3001/productos", {
+    const response = await fetch(`${API_URL}/productos`, {
+      method: "GET",
       headers: {
-        "Cache-Control": "no-cache", // Fuerza a no utilizar caché
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Agregar el token en los encabezados
       },
     });
 
