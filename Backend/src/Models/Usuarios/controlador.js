@@ -37,7 +37,7 @@ async function loginUser(req, res) {
 
   // Devolver el token al cliente por header y body.
   res.header("Authorization", token);
-  res.json({ token: token });
+  res.json({ token });
 }
 
 async function create(req, res) {

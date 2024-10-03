@@ -11,7 +11,7 @@ async function Authenticator(req, res, next) {
 
   try {
     // Separo el token porque viene como un arreglo
-    const tokenSplit = token.split(" ")[0];
+    const tokenSplit = token.split(" ")[1];
 
     // Declaro mi llave secreta
     const secret = process.env.JWT_SECRET;
