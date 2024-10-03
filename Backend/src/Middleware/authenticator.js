@@ -12,12 +12,13 @@ async function Authenticator(req, res, next) {
   try {
     // Separo el token porque viene como un arreglo
     const tokenSplit = token.split(" ")[0];
+
     // Declaro mi llave secreta
     const secret = process.env.JWT_SECRET;
 
-    //Verfico el token que llego y con mi llave secreta
-    const verify = jwt.verify(tokenSplit, secret);
+    const decoded = jwt.verify(tokenSplit, secret); // Decodificar el token
 
+    req.token = decoded;
     //Continuo ejecucion normal
     next();
   } catch (error) {
