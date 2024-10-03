@@ -2,12 +2,14 @@ const express = require("express");
 const app = express();
 const config = require("./config");
 const morgan = require("morgan");
+const cors = require("cors");
 
 const productos = require("./Models/Productos/rutas");
 const usuarios = require("./Models/Usuarios/rutas");
 const { Authenticator } = require("./Middleware/authenticator");
 
 // MIDDLEWARE
+app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
