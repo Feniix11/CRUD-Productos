@@ -1,6 +1,7 @@
 // src/components/Login.jsx
 
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom"; // Importar useNavigate
 import login from "../../service/login";
 import "./login.css"; // Importar el CSS
 
@@ -9,6 +10,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+
+  const navigate = useNavigate(); // Inicializar useNavigate
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,6 +24,9 @@ const Login = () => {
       localStorage.setItem("token", loginResponse.token);
       setEmail("");
       setPassword("");
+
+      // Redirigir a la página de productos después de iniciar sesión
+      navigate("/productos");
     } catch (error) {
       setError(error.message);
     }
@@ -43,13 +49,14 @@ const Login = () => {
           <div className="form-group">
             <label>Contraseña:</label>
             <input
-              type="password"
+              type="passwdord"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
           <button type="submit">Iniciar Sesión</button>
+          <Link to="http://localhost:5173/register">No tienes una cuenta?</Link>
         </form>
         {error && <p style={{ color: "red" }}>{error}</p>}
         {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}

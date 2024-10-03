@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import register from "../../service/register";
 import "./register.css";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -11,6 +12,7 @@ const Register = () => {
 
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate(); // Inicializar useNavigate
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -24,6 +26,7 @@ const Register = () => {
       setUser("");
       setEmail("");
       setPassword("");
+      navigate("/");
     } catch (error) {
       setError(error.message);
     }
