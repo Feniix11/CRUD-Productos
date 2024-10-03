@@ -1,0 +1,31 @@
+/* src/components/NavBar.css */
+
+.navbar {
+  display: flex;
+  justify-content: space-between; /* Espacio entre logo y enlaces */
+  align-items: center; /* Centra verticalmente */
+  background-color: #3b5998; /* Color de fondo (Facebook Blue) */
+  padding: 10px 20px; /* Espaciado interior */
+  color: white; /* Color del texto */
+}
+
+.navbar-logo h1 {
+  margin: 0; /* Elimina margen alrededor del logo */
+  font-size: 24px; /* Tamaño de fuente del logo */
+}
+
+.navbar-links {
+  display: flex; /* Disposición horizontal */
+}
+
+.navbar-link {
+  color: white; /* Color de texto de los enlaces */
+  text-decoration: none; /* Sin subrayado */
+  margin: 0 15px; /* Espaciado entre enlaces */
+  font-size: 16px; /* Tamaño de fuente de los enlaces */
+  transition: color 0.3s; /* Efecto suave al cambiar el color */
+}
+
+.navbar-link:hover {
+  color: #e7f3ff; /* Color de texto al pasar el mouse */
+}

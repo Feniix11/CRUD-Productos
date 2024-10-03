@@ -6,10 +6,7 @@ async function todos(req, res) {
   try {
     const productos = await db.todos(PRODUCTOS);
 
-    res.send({
-      message: PRODUCTOS,
-      body: productos,
-    });
+    res.send(productos);
   } catch (error) {
     res.status(404).json({
       message: "No se pudo encontrar los productos",

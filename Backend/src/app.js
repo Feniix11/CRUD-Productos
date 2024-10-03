@@ -6,7 +6,6 @@ const cors = require("cors");
 
 const productos = require("./Models/Productos/rutas");
 const usuarios = require("./Models/Usuarios/rutas");
-const { Authenticator } = require("./Middleware/authenticator");
 
 // MIDDLEWARE
 app.use(cors());
