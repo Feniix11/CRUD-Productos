@@ -26,7 +26,7 @@ const Login = () => {
       setPassword("");
 
       // Redirigir a la página de productos después de iniciar sesión
-      navigate("/productos");
+      navigate("/main");
     } catch (error) {
       setError(error.message);
     }
@@ -56,7 +56,9 @@ const Login = () => {
             />
           </div>
           <button type="submit">Iniciar Sesión</button>
-          <Link to="http://localhost:5173/register">No tienes una cuenta?</Link>
+          <Link to="register" className="register-link">
+            Registrate
+          </Link>
         </form>
         {error && <p style={{ color: "red" }}>{error}</p>}
         {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}

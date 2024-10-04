@@ -9,14 +9,8 @@ const NavBar = () => {
         <h1>Mi App</h1>
       </div>
       <div className="navbar-links">
-        <a href="/" className="navbar-link">
-          Login
-        </a>
-        <a href="/register" className="navbar-link">
-          Registro
-        </a>
-        <a href="/productos" className="navbar-link">
-          Productos
+        <a href="/logout" className="navbar-link">
+          Logout
         </a>
       </div>
     </nav>

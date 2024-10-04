@@ -58,3 +58,18 @@ button {
 button:hover {
   background-color: #0056b3; /* Color de fondo del botón al pasar el mouse */
 }
+
+/* Agregar margen para separar el enlace del botón */
+.login-container .register-link {
+  display: block;
+  text-align: center; /* Centrar el texto */
+  margin-top: 20px; /* Separación del botón */
+  font-size: 14px; /* Tamaño de letra más pequeño */
+  color: #007bff; /* Color azul del enlace */
+  text-decoration: none; /* Quitar el subrayado */
+}
+
+/* Cambio de color al pasar el ratón */
+.login-container .register-link:hover {
+  color: #0056b3; /* Un azul más oscuro al hacer hover */
+}
