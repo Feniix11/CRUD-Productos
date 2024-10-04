@@ -1,0 +1,8 @@
+.main-content {
+  padding: 20px;
+  padding-bottom: 100px; /* Asegura que el contenido no esté detrás del footer */
+  min-height: calc(
+    100vh - 120px
+  ); /* Altura mínima para el contenido con espacio para header y footer */
+  margin-top: 60px; /* Ajustar el margen superior para no cubrir el header */
+}

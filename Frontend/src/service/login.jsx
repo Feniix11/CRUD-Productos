@@ -15,8 +15,9 @@ async function login(email, password) {
     }
 
     const token = await response.json();
+    console.log("TOKEN: ", token);
 
-    localStorage.setItem("token", token);
+    localStorage.setItem("token", token.token);
 
     return token; // Retorna el token o los datos que envíe la API
   } catch (error) {

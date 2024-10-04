@@ -20,8 +20,9 @@ const Login = () => {
 
     try {
       const loginResponse = await login(email, password);
+
       console.log("Token de inicio de sesión:", loginResponse);
-      localStorage.setItem("token", loginResponse.token);
+
       setEmail("");
       setPassword("");
 
@@ -49,7 +50,7 @@ const Login = () => {
           <div className="form-group">
             <label>Contraseña:</label>
             <input
-              type="passwdord"
+              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required

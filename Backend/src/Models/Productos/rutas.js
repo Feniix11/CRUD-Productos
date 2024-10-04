@@ -6,7 +6,7 @@ const router = express.Router();
 // RUTS PRODUCTS
 
 router.get("/", Authenticator, controlador.todos);
-router.post("/create", Authenticator, controlador.create);
+router.post("/create", controlador.create);
 router.put("/purchase", controlador.purchase);
 
 module.exports = router;
