@@ -30,7 +30,7 @@ async function loginUser(req, res) {
   };
 
   // Tiempo de expiracion de Token
-  const expiresIn = "5m";
+  const expiresIn = "10m";
 
   // Firmar el token
   const token = generateToken.generateToken(payload, expiresIn);

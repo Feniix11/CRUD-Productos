@@ -7,6 +7,6 @@ const router = express.Router();
 
 router.get("/", Authenticator, controlador.todos);
 router.post("/create", controlador.create);
-router.put("/purchase", controlador.purchase);
+router.put("/purchase", Authenticator, controlador.purchase);
 
 module.exports = router;

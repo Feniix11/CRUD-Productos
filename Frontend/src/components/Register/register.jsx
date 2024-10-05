@@ -1,8 +1,8 @@
 // src/components/Login.jsx
 
 import React, { useState } from "react";
-import register from "../../service/register";
-import "./register.css";
+import register from "../../service/registerFetch";
+import "./Register.css";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {

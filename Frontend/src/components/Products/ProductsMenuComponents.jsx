@@ -1,84 +1,87 @@
 import React, { useState, useEffect } from "react";
-import { fetchProducts } from "../../service/products"; // Asegúrate de que esta función esté bien implementada
+import { fetchProducts } from "../../service/productsFetch";
 
-import "./ProductsMenuComponents.css"; // Importa el CSS
+import "./ProductsMenuComponents.css";
 
-const ProductsMenuComponents = () => {
+const ProductsMenuComponents = ({ onUpdateCart }) => {
   const [products, setProducts] = useState([]);
-  const [error, setError] = useState(null); // Para manejar errores
-  const [loading, setLoading] = useState(true); // Para manejar el estado de carga
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [buying, setBuying] = useState([]);
 
   useEffect(() => {
-    // Función para obtener productos
-    const GetProducts = async () => {
-      try {
-        const response = await fetchProducts(); // Llama a la API
-        const productsWithQuantity = response.map((product) => ({
-          ...product,
-          quantity: product.quantity || 0, // Si no tiene cantidad, inicializa en 0
-        }));
-        setProducts(productsWithQuantity);
-        setLoading(false);
-      } catch (error) {
-        setError(error.message); // Manejar error
-        setLoading(false);
-      }
-    };
-
-    GetProducts(); // Llamar a la función para obtener productos
+    GetProducts();
   }, []);
 
-  // Funciones para manejar la cantidad
-  const handleIncrease = (id) => {
-    setProducts((prevProducts) =>
-      prevProducts.map((product) =>
-        product.id === id
-          ? { ...product, quantity: product.quantity + 1 }
-          : product
-      )
-    );
+  const GetProducts = async () => {
+    try {
+      const allProducts = await fetchProducts();
+      setProducts(allProducts);
+      setLoading(false);
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+    }
   };
 
-  const handleDecrease = (id) => {
-    setProducts((prevProducts) =>
-      prevProducts.map((product) =>
-        product.id === id && product.quantity > 0
-          ? { ...product, quantity: product.quantity - 1 }
-          : product
-      )
-    );
+  const updateQuantity = (productId, increment) => {
+    // Esta función solo debería ejecutarse cuando el usuario interactúe, no durante el renderizado
+    setBuying((prevBuying) => {
+      const existingProductIndex = prevBuying.findIndex(
+        (p) => p.id === productId
+      );
+      const updatedProducts = [...prevBuying];
+
+      if (existingProductIndex > -1) {
+        // Si el producto ya está en el carrito, actualizamos su cantidad
+        const newQuantity =
+          updatedProducts[existingProductIndex].quantity + increment;
+        if (newQuantity <= 0) {
+          // Si la cantidad llega a 0 o menor, lo eliminamos del carrito
+          updatedProducts.splice(existingProductIndex, 1);
+        } else {
+          // Si no, actualizamos la cantidad
+          updatedProducts[existingProductIndex].quantity = newQuantity;
+        }
+      } else if (increment > 0) {
+        // Si el producto no está en el carrito y el incremento es mayor que 0, lo agregamos
+        const productToAdd = products.find((p) => p.id === productId);
+        updatedProducts.push({ ...productToAdd, quantity: increment });
+      }
+
+      // Esta actualización debería ejecutarse solo en respuesta a un evento, no durante el render
+      onUpdateCart(updatedProducts);
+      return updatedProducts;
+    });
   };
 
-  // Manejo de estados de carga y error
   if (loading) return <div>Cargando productos...</div>;
   if (error) return <div>Error al cargar productos: {error}</div>;
 
   return (
     <div className="products-container">
-      {products.length > 0 ? (
-        products.map((product) => (
-          <div key={product.id} className="product-card">
-            <h3>{product.name}</h3>
-            <p>
-              <strong>SKU:</strong> {product.SKU}
-            </p>
-            <p>
-              <strong>Cantidad:</strong> {product.quantity}
-            </p>
-            <p>
-              <strong>Fecha de creación:</strong>{" "}
-              {new Date(product.createdAt).toLocaleDateString()}
-            </p>
-            <div className="quantity-controls">
-              <button onClick={() => handleDecrease(product.id)}>-</button>
-              <span>{product.quantity}</span>
-              <button onClick={() => handleIncrease(product.id)}>+</button>
-            </div>
+      {products.map((product) => (
+        <div key={product.id} className="product-card">
+          <h3>{product.name}</h3>
+          <p>
+            <strong>SKU:</strong> {product.SKU}
+          </p>
+          <p>
+            <strong>Cantidad en inventario:</strong> {product.quantity}
+          </p>
+          <p>
+            <strong>Fecha de creación:</strong>{" "}
+            {new Date(product.createdAt).toLocaleDateString()}
+          </p>
+          <div className="quantity-controls">
+            <button onClick={() => updateQuantity(product.id, -1)}>-</button>
+            <span>
+              {buying.find((p) => p.id === product.id)?.quantity || 0}
+            </span>
+            <button onClick={() => updateQuantity(product.id, 1)}>+</button>
           </div>
-        ))
-      ) : (
-        <p>No hay productos disponibles.</p>
-      )}
+        </div>
+      ))}
     </div>
   );
 };

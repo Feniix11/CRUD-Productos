@@ -2,14 +2,16 @@
 
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Importar useNavigate
-import login from "../../service/login";
-import "./login.css"; // Importar el CSS
+import login from "../../service/loginFetch";
+import "./Login.css"; // Importar el CSS
+import { useUser } from "../../hooks/useContext/User";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const { setUser } = useUser();
 
   const navigate = useNavigate(); // Inicializar useNavigate
 
@@ -19,14 +21,15 @@ const Login = () => {
     setSuccessMessage("");
 
     try {
-      const loginResponse = await login(email, password);
+      const [tokenResponse, payload] = await login(email, password);
 
-      console.log("Token de inicio de sesión:", loginResponse);
+      console.log("Token de inicio de sesión:", tokenResponse);
 
       setEmail("");
       setPassword("");
 
-      // Redirigir a la página de productos después de iniciar sesión
+      setUser(payload);
+
       navigate("/main");
     } catch (error) {
       setError(error.message);
