@@ -31,6 +31,8 @@
   border-radius: 4px;
   padding: 5px 10px;
   cursor: pointer;
+  margin-left: 4px;
+  justify-content: center;
 }
 
 .quantity-controls button:hover {
@@ -49,4 +51,11 @@
     100vh - 120px
   ); /* Altura mínima para el contenido con espacio para header y footer */
   margin-top: 60px; /* Ajustar el margen superior para no cubrir el header */
+}
+
+.product-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin-bottom: 10px;
 }

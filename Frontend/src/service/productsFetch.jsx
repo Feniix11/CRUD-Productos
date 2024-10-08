@@ -17,8 +17,6 @@ export const fetchProducts = async () => {
 
     const products = await response.json();
 
-    console.log("Respuesta products: ", products);
-
     return products;
   } catch (error) {
     console.error("Error:", error);
