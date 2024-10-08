@@ -16,6 +16,7 @@ const ProductsMenuComponents = ({ onUpdateCart }) => {
   const GetProducts = async () => {
     try {
       const allProducts = await fetchProducts();
+      console.log("Todos los productos: ", allProducts);
       setProducts(allProducts);
       setLoading(false);
     } catch (error) {

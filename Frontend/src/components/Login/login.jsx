@@ -1,6 +1,6 @@
 // src/components/Login.jsx
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Importar useNavigate
 import login from "../../service/loginFetch";
 import "./Login.css"; // Importar el CSS
@@ -14,6 +14,12 @@ const Login = () => {
   const { setUser } = useUser();
 
   const navigate = useNavigate(); // Inicializar useNavigate
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    token ? navigate("/main") : null;
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();

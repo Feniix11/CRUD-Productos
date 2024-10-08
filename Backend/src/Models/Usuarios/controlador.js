@@ -30,10 +30,9 @@ async function loginUser(req, res) {
   };
 
   // Tiempo de expiracion de Token
-  const expiresIn = "10m";
 
   // Firmar el token
-  const token = generateToken.generateToken(payload, expiresIn);
+  const token = generateToken.generateToken(payload);
 
   // Devolver el token al cliente por header y body.
   res.header("Authorization", token);
